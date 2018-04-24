@@ -4,8 +4,64 @@ from math import *
 from gmath import *
 
 def scanline_convert(polygons, i, screen, zbuffer ):
-    pass
+    color = []
+    i = 0
+    while (i < 3):
+        color.append(random.randint(0,255))
+        i++
+        
+    x0 = polygons[i][0]
+    x1 = polygons[i+1][0]
+    x2 = polygons[i+2][0]
+    
+    y0 = polygons[i][1]
+    y1 = polygons[i+1][1]
+    y2 = polygons[i+2][1]
 
+    z0 = polygons[i][2]
+    z1 = polygons[i+1][2]
+    z2 = polygons[i+2][2]
+
+    if y0 > y2:
+        temp = y2
+        y2 = y0
+        y0 = temp
+        temp = x2
+        x2 = x0
+        x0 = temp
+        temp = z2
+        z2 = z0
+        z0 = temp
+
+    if y0 > y1:
+        temp = y1
+        y1 = y0
+        y0 = temp
+        temp = x1
+        x1 = x0
+        x0 = temp
+        temp = z1
+        z1 = z0
+        z0 = temp
+        
+    if y1 > y2:
+        temp = y2
+        y2 = y1
+        y1 = temp
+        temp = x2
+        x2 = x1
+        x1 = temp
+        temp = z2
+        z2 = z1
+        z1 = temp
+
+    
+        
+    drawlines
+    
+        
+    
+    
 def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(polygons, x0, y0, z0);
     add_point(polygons, x1, y1, z1);
@@ -297,8 +353,16 @@ def draw_line( x0, y0, z0, x1, y1, z1, screen, zbuffer, color ):
             loop_start = y1
             loop_end = y
 
+
+    #finding zvalues
+    if loop_end-loop_start != 0:
+        dz = (z1-z0)/(loop_end-loop_start)
+    else: 
+        dz = 0 
+    z = z0    
+            
     while ( loop_start < loop_end ):
-        plot( screen, zbuffer, color, x, y, 0 )
+        plot( screen, zbuffer, color, x, y, z )
         if ( (wide and ((A > 0 and d > 0) or (A < 0 and d < 0))) or
              (tall and ((A > 0 and d < 0) or (A < 0 and d > 0 )))):
 
@@ -310,4 +374,6 @@ def draw_line( x0, y0, z0, x1, y1, z1, screen, zbuffer, color ):
             y+= dy_east
             d+= d_east
         loop_start+= 1
-    plot( screen, zbuffer, color, x, y, 0 )
+        z += dz
+    plot( screen, zbuffer, color, x, y, z1 )
+
