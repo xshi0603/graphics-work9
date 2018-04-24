@@ -57,7 +57,9 @@ def scanline_convert(polygons, i, screen, zbuffer ):
 
     
         
-    drawlines
+    drawlines from y0 -> y1 then from y1 to y2
+    should draw from x0 -> y1 then from x1 to y2
+    make sure to plot the zbuffer too
     
         
     
